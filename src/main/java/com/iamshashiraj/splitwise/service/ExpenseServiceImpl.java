@@ -42,6 +42,10 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense getExpenseFromRequestEntity(ExpenseRequestEntity requestEntity) {
+        // TODO: Check if paidBy user is an valid user
+        // TODO: Check if all the associated users are valid users
+        // TODO: if expense type is not "exact" or "equals" throw appropriate http error
+        // TODO: Check if associated shares add upto original amount paid
         Expense expense = new Expense();
         expense.setName(requestEntity.getName());
         expense.setGroup(groupService.getGroupById(requestEntity.getGroupId()));
@@ -54,7 +58,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if (requestEntity.getExpenseType().equalsIgnoreCase("equal")) {
             expense.setExpenseType(ExpenseType.EQUAL_SPLIT);
         }
-        // TODO: if expense type is not "exact" or "equals" throw appropriate http error
+
         StringBuilder users = new StringBuilder();
         for(Integer userId: requestEntity.getAssociatedUsers()) {
             users.append(userId + " ");
